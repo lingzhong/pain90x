@@ -1,5 +1,6 @@
 package course.labs.todomanager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import course.labs.todomanager.ToDoItem.Status;
 
-public class ToDoListAdapter extends BaseAdapter {
+public class ToDoListAdapter extends BaseAdapter implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	// List of ToDoItems
 	private final List<ToDoItem> mItems = new ArrayList<ToDoItem>();

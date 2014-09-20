@@ -32,6 +32,7 @@ import course.labs.todomanager.ToDoItem.Priority;
 import course.labs.todomanager.ToDoItem.Status;
 
 public class ToDoManagerActivity extends ListActivity {
+	
 
 	// Add a ToDoItem Request Code
 	private static final int ADD_TODO_ITEM_REQUEST = 0;
@@ -43,7 +44,7 @@ public class ToDoManagerActivity extends ListActivity {
 	private static final int MENU_DELETE = Menu.FIRST;
 	private static final int MENU_DUMP = Menu.FIRST + 1;
 
-	ToDoListAdapter mAdapter;
+	public static ToDoListAdapter mAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -98,33 +99,14 @@ public class ToDoManagerActivity extends ListActivity {
 		// setting alarm based on new todolist
 		AlarmManager alarms = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
 
-	    PunishmentReceiver receiver = new PunishmentReceiver();
-	    IntentFilter filter = new IntentFilter("ALARM_ACTION");
-	    registerReceiver(receiver, filter);
-
-	    Intent intent = new Intent("ALARM_ACTION");
+	    Intent intent = new Intent(this, PunishmentReceiver.class);
+	    ToDoItem.packageIntent(intent, toDoItem.getTitle(), toDoItem.getPriority(),
+	    		toDoItem.getStatus(), toDoItem.getDate().toString());
 	    PendingIntent operation = PendingIntent.getBroadcast(this, 0, intent, 0);
-	    // I choose 3s after the launch of my application
-	    alarms.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+3000, operation);
+	    alarms.set(AlarmManager.RTC_WAKEUP, toDoItem.getDate().getTime(), operation);
 	}
 
-	public class PunishmentReceiver extends BroadcastReceiver {
-	    @Override
-	    public void onReceive(Context context, Intent intent) {
-	        // TODO Auto-generated method stub
-	    	Log.i(TAG, "Entering onReceive()");
-	    	// check if there are undone task(s)
-	    	if(! mAdapter.areAllItemsDone()) {
-	    		punish(context, intent);
-	    	}
-	    }
-	    
-	    private void punish(Context context, Intent intent) {
-	    	String toastMsg = "YOU ARE BEING PUNISHED BECAUSE YOU HAVEN'T COMPLETED THE "
-	    			+ intent.getStringExtra(ToDoItem.TITLE) + " TASK!!";
-	    	Toast.makeText(context, toastMsg, Toast.LENGTH_LONG).show();
-	    }
-	}
+
 
 	// Do not modify below here
 

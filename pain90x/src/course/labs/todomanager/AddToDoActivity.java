@@ -31,8 +31,9 @@ import course.labs.todomanager.ToDoItem.Status;
 
 public class AddToDoActivity extends Activity {
 	
-	// 7 days in milliseconds - 7 * 24 * 60 * 60 * 1000
-	private static final int SEVEN_DAYS = 604800000;
+	// half day in ms = 12 * 60 * 60 * 1000
+	private static final int DAY = 86400000;
+	private static final int MINUTE = 30000;
 
 	private static final String TAG = "Lab-UserInterface";
 
@@ -156,9 +157,9 @@ public class AddToDoActivity extends Activity {
 	
 	private void setDefaultDateTime() {
 
-		// Default is current time + 7 days
+		// Default is current time + 1 day
 		mDate = new Date();
-		mDate = new Date(mDate.getTime() + SEVEN_DAYS);
+		mDate = new Date(mDate.getTime() + MINUTE);
 
 		Calendar c = Calendar.getInstance();
 		c.setTime(mDate);
