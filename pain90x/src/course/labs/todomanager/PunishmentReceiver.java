@@ -16,7 +16,7 @@ public class PunishmentReceiver extends BroadcastReceiver {
     	Log.i(TAG, "Entering onReceive()");
     	// check if there are undone task(s)
     	if(! ToDoManagerActivity.mAdapter.areAllItemsDone()) {
-    		punish(context, intent);
+    		punishSMS();
     	}
     }
     
@@ -25,4 +25,21 @@ public class PunishmentReceiver extends BroadcastReceiver {
     			+ intent.getStringExtra(ToDoItem.TITLE) + " TASK!!";
     	Toast.makeText(context, toastMsg, Toast.LENGTH_LONG).show();
     }
+	
+	private void punishSMS(){
+            //Send texts
+            String phoneNo = "<Phone number here>"; //Put phone number here
+            String message = "<Insulting message here>"; //Put message here
+            try {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(phoneNo, null, message, null, null);
+                Toast.makeText(getApplicationContext(), "SMS sent.",
+                        Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),
+                        "SMS failed, please try again.",
+                        Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        }
 }
