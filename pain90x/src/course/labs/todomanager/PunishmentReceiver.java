@@ -3,6 +3,7 @@ package course.labs.todomanager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,7 +17,7 @@ public class PunishmentReceiver extends BroadcastReceiver {
     	Log.i(TAG, "Entering onReceive()");
     	// check if there are undone task(s)
     	if(! ToDoManagerActivity.mAdapter.areAllItemsDone()) {
-    		punishSMS();
+    		punishSMS(context, intent);
     	}
     }
     
@@ -26,17 +27,17 @@ public class PunishmentReceiver extends BroadcastReceiver {
     	Toast.makeText(context, toastMsg, Toast.LENGTH_LONG).show();
     }
 	
-	private void punishSMS(){
+	private void punishSMS(Context context, Intent intent){
             //Send texts
-            String phoneNo = "<Phone number here>"; //Put phone number here
-            String message = "<Insulting message here>"; //Put message here
+            String phoneNo = "16478885932"; //Put phone number here
+            String message = "I have big butts I cannot lie!"; //Put message here
             try {
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(phoneNo, null, message, null, null);
-                Toast.makeText(getApplicationContext(), "SMS sent.",
+                Toast.makeText(context, "SMS sent.",
                         Toast.LENGTH_LONG).show();
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(),
+                Toast.makeText(context,
                         "SMS failed, please try again.",
                         Toast.LENGTH_LONG).show();
                 e.printStackTrace();
