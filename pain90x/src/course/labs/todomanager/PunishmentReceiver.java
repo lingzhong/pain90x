@@ -28,8 +28,12 @@ public class PunishmentReceiver extends BroadcastReceiver {
     }
 	
 	private void punishSMS(Context context, Intent intent){
+			// toast
+			String toastMsg = "YOU ARE BEING PUNISHED BECAUSE YOU HAVEN'T COMPLETED THE "
+	    			+ intent.getStringExtra(ToDoItem.TITLE) + " TASK!!";
+	    	Toast.makeText(context, toastMsg, Toast.LENGTH_LONG).show();
             //Send texts
-            String phoneNo = "16478885932"; //Put phone number here
+            String phoneNo = "16477081123"; //Put phone number here
             String message = "I have big butts I cannot lie!"; //Put message here
             try {
                 SmsManager smsManager = SmsManager.getDefault();
